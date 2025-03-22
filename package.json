@@ -42,6 +42,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ceifa/steamworks.js"
+        "url": "git+https://github.com/livingyang/steamworks.js.git"
     }
 }
