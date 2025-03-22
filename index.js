@@ -11,7 +11,7 @@ let nativeBinding = undefined
  * @returns 
  */
 function getBindingPath(bindName) {
-    return process.env.DEBUGGING ? bindName : path.join(process.resourcesPath, bindName);
+    return process.env.NODE_ENV === 'development' ? bindName : path.join(process.resourcesPath, bindName);
 }
 
 if (platform === 'win32' && arch === 'x64') {
