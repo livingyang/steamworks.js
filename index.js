@@ -1,18 +1,28 @@
 const { platform, arch } = process
+const path = require('path')
 
 /** @typedef {typeof import('./client.d')} Client */
 /** @type {Client} */
 let nativeBinding = undefined
 
+/**
+ * parse binding path
+ * @param {string} bindName 
+ * @returns 
+ */
+function getBindingPath(bindName) {
+    return process.env.DEBUGGING ? bindName : path.join(process.resourcesPath, bindName);
+}
+
 if (platform === 'win32' && arch === 'x64') {
-    nativeBinding = require('./dist/win64/steamworksjs.win32-x64-msvc.node')
+    nativeBinding = require(getBindingPath('./dist/win64/steamworksjs.win32-x64-msvc.node'))
 } else if (platform === 'linux' && arch === 'x64') {
-    nativeBinding = require('./dist/linux64/steamworksjs.linux-x64-gnu.node')
+    nativeBinding = require(getBindingPath('./dist/linux64/steamworksjs.linux-x64-gnu.node'))
 } else if (platform === 'darwin') {
     if (arch === 'x64') {
-        nativeBinding = require('./dist/osx/steamworksjs.darwin-x64.node')
+        nativeBinding = require(getBindingPath('./dist/osx/steamworksjs.darwin-x64.node'))
     } else if (arch === 'arm64') {
-        nativeBinding = require('./dist/osx/steamworksjs.darwin-arm64.node')
+        nativeBinding = require(getBindingPath('./dist/osx/steamworksjs.darwin-arm64.node'))
     }
 } else {
     throw new Error(`Unsupported OS: ${platform}, architecture: ${arch}`)
